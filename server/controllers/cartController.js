@@ -43,6 +43,41 @@ const addToCart = (req, res) => {
   );
 };
 
+const getCart = (req, res) => {
+
+  const user_id = req.user.id;
+
+  const sql = `
+    SELECT
+      cart.id,
+      cart.quantity,
+      products.name,
+      products.price,
+      products.image_url
+    FROM cart
+    JOIN products
+      ON cart.product_id = products.id
+    WHERE cart.user_id = ?
+  `;
+
+  db.query(
+    sql,
+    [user_id],
+    (err, results) => {
+
+      if (err) {
+        return res
+          .status(500)
+          .json(err);
+      }
+
+      res.json(results);
+
+    }
+  );
+};
+
 module.exports = {
   addToCart,
+  getCart,
 };

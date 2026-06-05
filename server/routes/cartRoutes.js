@@ -7,6 +7,7 @@ const verifyToken =
 
 const {
   addToCart,
+  getCart,
 } = require("../controllers/cartController");
 
 router.post(
@@ -14,5 +15,7 @@ router.post(
   verifyToken,
   addToCart
 );
+
+router.get("/", verifyToken, getCart);
 
 module.exports = router;
