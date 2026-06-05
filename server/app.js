@@ -7,7 +7,8 @@ const userRoutes =
 const db = require("./config/db");
 const authRoutes =
   require("./routes/authRoutes");
-
+const cartRoutes =
+  require("./routes/cartRoutes");
 const app = express();
 
 app.use(cors());
@@ -19,6 +20,10 @@ app.get("/", (req, res) => {
 app.use(
   "/api/users",
   userRoutes
+);
+app.use(
+  "/api/cart",
+  cartRoutes
 );
 const PORT = process.env.PORT || 5000;
 
