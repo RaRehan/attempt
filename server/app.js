@@ -10,6 +10,8 @@ const authRoutes =
 const cartRoutes =
   require("./routes/cartRoutes");
 const app = express();
+const orderRoutes =
+  require("./routes/orderRoutes");
 
 app.use(cors());
 app.use(express.json());
@@ -42,4 +44,8 @@ const productRoutes =
 app.use(
   "/api/auth",
   authRoutes
+);
+app.use(
+  "/api/orders",
+  orderRoutes
 );

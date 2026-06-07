@@ -12,6 +12,25 @@ const register = async (req, res) => {
       password,
     } = req.body;
 
+    const checkEmail =
+  "SELECT * FROM users WHERE email = ?";
+
+db.query(
+  checkEmail,
+  [email],
+  async (err, results) => {
+
+    if (results.length > 0) {
+      return res.status(400).json({
+        message: "Email already exists",
+      });
+    }
+
+    // Continue registration here
+
+  }
+);
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const sql = `
@@ -78,6 +97,10 @@ const login = (req, res) => {
         message: "Invalid password",
       });
     }
+    console.log(
+      "VERIFY SECRET:",
+      process.env.JWT_SECRET
+      );//Debugger logs can be removed after testing
 
     const token = jwt.sign(
       {
