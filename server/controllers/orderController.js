@@ -118,6 +118,41 @@ const createOrder = (req, res) => {
   );
 };
 
+
+
+const getOrders = (req, res) => {
+
+  const user_id = req.user.id;
+
+  const sql = `
+    SELECT
+      id,
+      total_amount,
+      status,
+      created_at
+    FROM orders
+    WHERE user_id = ?
+    ORDER BY created_at DESC
+  `;
+
+  db.query(
+    sql,
+    [user_id],
+    (err, results) => {
+
+      if (err) {
+        return res
+          .status(500)
+          .json(err);
+      }
+
+      res.json(results);
+
+    }
+  );
+};
+
 module.exports = {
   createOrder,
+  getOrders,
 };

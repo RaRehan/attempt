@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
-import { getCart } from "../services/cartService";
+import {
+  getCart,
+  removeFromCart,
+} from "../services/cartService";
 
 export default function Cart() {
   const [cartItems, setCartItems] =
@@ -22,6 +25,24 @@ export default function Cart() {
       console.error(error);
     }
   };
+
+  const handleRemove = async (cartId) => {
+  try {
+
+    const token =
+      localStorage.getItem("token");
+
+    await removeFromCart(
+      cartId,
+      token
+    );
+
+    fetchCart();
+
+  } catch (error) {
+    console.error(error);
+  }
+};
 
   const total = cartItems.reduce(
     (sum, item) =>
@@ -79,6 +100,14 @@ export default function Cart() {
             Total: $
             {total.toFixed(2)}
           </h2>
+
+          <button
+  onClick={() =>
+    handleRemove(item.id)
+  }
+>
+  Remove
+</button>
         </>
       )}
     </div>

@@ -77,7 +77,31 @@ const getCart = (req, res) => {
   );
 };
 
+const removeFromCart = (req, res) => {
+  const cartId = req.params.id;
+
+  const sql = `
+    DELETE FROM cart
+    WHERE id = ?
+  `;
+
+  db.query(
+    sql,
+    [cartId],
+    (err, result) => {
+      if (err) {
+        return res.status(500).json(err);
+      }
+
+      res.json({
+        message: "Item removed from cart",
+      });
+    }
+  );
+};
+
 module.exports = {
   addToCart,
   getCart,
+  removeFromCart,
 };

@@ -8,6 +8,7 @@ const verifyToken =
 const {
   addToCart,
   getCart,
+  removeFromCart,
 } = require("../controllers/cartController");
 
 router.post(
@@ -15,6 +16,7 @@ router.post(
   verifyToken,
   addToCart
 );
+router.delete( "/:id", verifyToken, removeFromCart);
 
 router.get("/", verifyToken, getCart);
 
