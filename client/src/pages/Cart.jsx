@@ -26,23 +26,23 @@ export default function Cart() {
     }
   };
 
-  const handleRemove = async (cartId) => {
-  try {
+  const handleRemove = async (
+    cartId
+  ) => {
+    try {
+      const token =
+        localStorage.getItem("token");
 
-    const token =
-      localStorage.getItem("token");
+      await removeFromCart(
+        cartId,
+        token
+      );
 
-    await removeFromCart(
-      cartId,
-      token
-    );
-
-    fetchCart();
-
-  } catch (error) {
-    console.error(error);
-  }
-};
+      fetchCart();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const total = cartItems.reduce(
     (sum, item) =>
@@ -71,10 +71,13 @@ export default function Cart() {
                 border:
                   "1px solid #333",
                 padding: "20px",
-                marginBottom: "20px",
+                marginBottom:
+                  "20px",
               }}
             >
-              <h3>{item.name}</h3>
+              <h3>
+                {item.name}
+              </h3>
 
               <p>
                 Price: $
@@ -83,6 +86,7 @@ export default function Cart() {
 
               <p>
                 Quantity:
+                {" "}
                 {item.quantity}
               </p>
 
@@ -93,6 +97,16 @@ export default function Cart() {
                   item.quantity
                 ).toFixed(2)}
               </p>
+
+              <button
+                onClick={() =>
+                  handleRemove(
+                    item.id
+                  )
+                }
+              >
+                Remove
+              </button>
             </div>
           ))}
 
@@ -100,14 +114,6 @@ export default function Cart() {
             Total: $
             {total.toFixed(2)}
           </h2>
-
-          <button
-  onClick={() =>
-    handleRemove(item.id)
-  }
->
-  Remove
-</button>
         </>
       )}
     </div>
