@@ -102,6 +102,11 @@ const login = (req, res) => {
       process.env.JWT_SECRET
       );//Debugger logs can be removed after testing
 
+      console.log(
+  "LOGIN SECRET:",
+  process.env.JWT_SECRET
+);//Debugger logs can be removed after testing
+
     const token = jwt.sign(
       {
         id: user.id,

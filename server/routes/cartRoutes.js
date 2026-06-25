@@ -9,7 +9,10 @@ const {
   addToCart,
   getCart,
   removeFromCart,
-} = require("../controllers/cartController");
+  updateCartQuantity,
+} = require(
+  "../controllers/cartController"
+);
 
 router.post(
   "/add",
@@ -17,6 +20,7 @@ router.post(
   addToCart
 );
 router.delete( "/:id", verifyToken, removeFromCart);
+router.put("/:id", verifyToken, updateCartQuantity);
 
 router.get("/", verifyToken, getCart);
 

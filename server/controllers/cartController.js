@@ -100,8 +100,46 @@ const removeFromCart = (req, res) => {
   );
 };
 
+const updateCartQuantity = (
+  req,
+  res
+) => {
+
+  const cartId =
+    req.params.id;
+
+  const { quantity } =
+    req.body;
+
+  const sql = `
+    UPDATE cart
+    SET quantity = ?
+    WHERE id = ?
+  `;
+
+  db.query(
+    sql,
+    [quantity, cartId],
+    (err, result) => {
+
+      if (err) {
+        return res
+          .status(500)
+          .json(err);
+      }
+
+      res.json({
+        message:
+          "Quantity updated",
+      });
+
+    }
+  );
+};
+
 module.exports = {
   addToCart,
   getCart,
   removeFromCart,
+  updateCartQuantity,
 };
